@@ -22,13 +22,13 @@ module Prompts
     CTRL_D = ["\u0004"] # EOF
     CTRL_E = ["\u0005"] # End
     CTRL_F = ["\u0006"] # Forward/Right
-    CTRL_H = ["\u007F"] # Backspace
+    CTRL_H = ["\u0008"] # Backspace
     CTRL_N = ["\u000E"] # Next/Down
     CTRL_P = ["\u0010"] # Previous/Up
     CTRL_U = ["\u0015"] # Negative affirmation
     BACKSPACE = ["\b"]
-    ESCAPE = "\e"
-    DELETE = ["\e[3~", "\u007F", "\177"]
+    ESCAPE = ["\e"]
+    DELETE = ["\e[3~", "\u007F"]
     RETURN = ["\r", "\n"]
     HOME = ["\e[1~", "\eOH", "\e[H", "\e[7~"]
   end
