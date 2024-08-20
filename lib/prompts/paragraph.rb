@@ -2,7 +2,7 @@
 
 module Prompts
   class Paragraph
-    include Rendering
+    include TextUtils
 
     LINE_PADDING = 3
 
@@ -13,7 +13,7 @@ module Prompts
     end
 
     def lines
-      wrap_text(@text, width: @width, line_padding: @line_padding)
+      wrap_text(@text, width: @width, line_prefix: @line_padding)
     end
   end
 end

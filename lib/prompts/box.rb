@@ -4,7 +4,7 @@ require "fmt"
 
 module Prompts
   class Box
-    include Rendering
+    include TextUtils
 
     SOLID_BORDER    = { top_left: "┌", top_right: "┐", bottom_left: "└", bottom_right: "┘", horizontal: "─", vertical: "│" }.freeze
     DOUBLE_BORDER   = { top_left: "╔", top_right: "╗", bottom_left: "╚", bottom_right: "╝", horizontal: "═", vertical: "║" }.freeze
@@ -26,29 +26,29 @@ module Prompts
     end
 
     def centered(text)
-      @content << align(text, :center)
+      @content.concat align(text, :center)
     end
 
     def left(text)
-      @content << align(text, :left)
+      @content.concat align(text, :left)
     end
 
     def right(text)
-      @content << align(text, :right)
+      @content.concat align(text, :right)
     end
 
     def gap
-      @content << center(EMPTY)
+      @content.concat align(EMPTY, :center)
     end
 
     def lines
       [].tap do |output|
         output << top_border
-        output << SPACE + center(EMPTY) if @padded
+        align(EMPTY, :center).each { |line| output << SPACE + line } if @padded
         @content.each do |line|
           output << SPACE + line
         end
-        output << SPACE + center(EMPTY) if @padded
+        align(EMPTY, :center).each { |line| output << SPACE + line } if @padded
         output << bottom_border
       end
     end
@@ -65,38 +65,9 @@ module Prompts
         Fmt("#{@line_padding}%{border}#{@border_color}", border: border)
       end
 
-      def align(text, alignment, between: @border_parts[:vertical], total_width: @width)
-        stripped = strip_ansi(text)
+      def align(text, alignment, between: @border_parts[:vertical])
         formatted_boundary = Fmt("%{boundary}#{@border_color}", boundary: between)
-        left_boundary = formatted_boundary + SPACE
-        right_boundary = SPACE + formatted_boundary
-
-        available_width = total_width - (between.length * 2 + 2)
-        padding = available_width - stripped.length
-
-        case alignment
-        when :left
-          left_boundary + text + (SPACE * padding) + right_boundary
-        when :right
-          left_boundary + (SPACE * padding) + text + right_boundary
-        when :center
-          left_padding = padding / 2
-          right_padding = padding - left_padding
-          left_boundary + (SPACE * left_padding) + text + (SPACE * right_padding) + right_boundary
-        end
-      end
-
-      def center(text, between: @border_parts[:vertical], total_width: @width)
-        stripped = strip_ansi(text)
-        left_boundary = Fmt("%{boundary}#{@border_color} ", boundary: between)
-        right_boundary = Fmt(" %{boundary}#{@border_color}", boundary: between)
-
-        available_width = total_width - (between.length * 2 + 2)
-        total_padding = available_width - stripped.length
-        left_padding = total_padding / 2
-        right_padding = total_padding - left_padding
-
-        left_boundary + (' ' * left_padding) + text + (' ' * right_padding) + right_boundary
+        wrap_text(text, width: @width, line_prefix: formatted_boundary + SPACE, line_suffix: SPACE + formatted_boundary, alignment: alignment)
       end
   end
 end
