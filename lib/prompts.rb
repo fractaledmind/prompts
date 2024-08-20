@@ -9,7 +9,7 @@ Fmt.add_rainbow_filters
 
 require_relative "prompts/version"
 require_relative "prompts/prompt"
-require_relative "prompts/rendering"
+require_relative "prompts/text_utils"
 require_relative "prompts/inputable"
 require_relative "prompts/content"
 require_relative "prompts/paragraph"
