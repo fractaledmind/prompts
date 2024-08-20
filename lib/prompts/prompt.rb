@@ -8,7 +8,6 @@ module Prompts
     def initialize(label: nil, prompt: "> ", instructions: nil, hint: nil, default: nil)
       @label = label
       @prompt = prompt
-      @instructions = instructions
       @hint = hint
       @default = default
       @required = required
@@ -17,6 +16,7 @@ module Prompts
       @content = nil
       @error = nil
       @attempts = 0
+      @instructions = nil
       @validations = []
       @choice = nil
       @content_prepared = false
@@ -30,10 +30,6 @@ module Prompts
 
     def label(label)
       @label = label
-    end
-
-    def instructions(instructions)
-      @instructions = instructions
     end
 
     def hint(hint)
