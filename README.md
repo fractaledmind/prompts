@@ -18,7 +18,7 @@ If bundler is not being used to manage dependencies, install the gem by executin
 gem install prompts
 ```
 
-## Usage
+## Philosophy
 
 Prompts aims to provide beautiful and user-friendly forms for your command-line applications while keeping both the API and the implementation simple. This means Prompts is built with constraints in mind.
 
@@ -27,6 +27,8 @@ In order to minimize complexity, we build on top of the excellent [`reline`](htt
 In this way, this new library is similar to [Charm's Huh library](https://github.com/charmbracelet/huh) when used in "accessible" mode. But, with some UX improvements added to this interaction. Instead of simply appending new fields to the screen, Prompts' forms act like wizards 🧙‍♂️. Each field gets its own screen, and on each render loop, the screen is reset and repainted.
 
 Finally, to keep internals simple, Prompts expects users to build and provide their own ANSI-formatted strings. However, we do make available the [`fmt`](https://github.com/hopsoft/fmt) gem as the recommended way to generate well formatted ANSI strings.
+
+## Available Prompts
 
 ### Text
 
