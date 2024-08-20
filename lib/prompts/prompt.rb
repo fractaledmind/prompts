@@ -4,8 +4,13 @@ require "reline"
 
 module Prompts
   class Prompt
-    def initialize(label: nil, prompt: "> ", instructions: nil, hint: nil)
-    def initialize(label: nil, prompt: "> ", instructions: nil, hint: nil, default: nil)
+    def self.ask(label: nil, prompt: "> ", hint: nil, default: nil, required: false, validate: nil)
+      instance = new(label: label, prompt: prompt, hint: hint, default: default, required: required, validate: validate)
+      yield instance if block_given?
+      instance.ask
+    end
+
+    def initialize(label: nil, prompt: "> ", hint: nil, default: nil, required: false, validate: nil)
       @label = label
       @prompt = prompt
       @hint = hint
