@@ -1,8 +1,8 @@
 # Prompts
 
-Prompts helps you to add beautiful and user-friendly forms to your command-line applications, with browser-like features including placeholder text and validation.
+Prompts helps you to add beautiful and user-friendly forms to your command-line applications, with browser-like features including label text, help text, validation, and inline errors.
 
-It is heavily inspired by the [Laravel Prompts](https://laravel.com/docs/11.x/prompts) package.
+It was originally inspired by the [Laravel Prompts](https://laravel.com/docs/11.x/prompts) package.
 
 ## Installation
 
@@ -18,9 +18,168 @@ If bundler is not being used to manage dependencies, install the gem by executin
 gem install prompts
 ```
 
-## Usage
+## Available Prompts
 
-TODO: Write usage instructions here
+### Text
+
+A `Text` prompt will prompt the user with the given question, accept their input, and then return it:
+
+```ruby
+name = Prompts::TextPrompt.ask(label: "What is your name?")
+```
+
+You may also include a default value and an informational hint:
+
+```ruby
+name = Prompts::TextPrompt.ask(
+  label: "What is your name?",
+  default: "John Doe",
+  hint: "This will be displayed on your profile."
+)
+```
+
+#### Required values
+
+If you require a value to be entered, you may pass the `required` argument:
+
+```ruby
+name = Prompts::TextPrompt.ask(
+  label: "What is your name?",
+  required: true
+)
+```
+
+If you would like to customize the validation message, you may also pass a string:
+
+```ruby
+name = Prompts::TextPrompt.ask(
+  label: "What is your name?",
+  required: "Your name is required."
+)
+```
+
+#### Additional Validation
+
+Finally, if you would like to perform additional validation logic, you may pass a block/proc to the validate argument:
+
+```ruby
+name = Prompts::TextPrompt.ask(
+  label: "What is your name?",
+  validate: ->(value) do
+    if value.length < 3
+      "The name must be at least 3 characters."
+    elsif value.length > 255
+      "The name must not exceed 255 characters."
+    end
+  end
+)
+```
+
+The block will receive the value that has been entered and may return an error message, or `nil` if the validation passes.
+
+### Select
+
+If you need the user to select from a predefined set of choices, you may use the `Select` prompt:
+
+```ruby
+role = Prompts::SelectPrompt.ask(
+  label: "What role should the user have?",
+  options: ["Member", "Contributor", "Owner"]
+)
+```
+
+You may also include a default value and an informational hint:
+
+```ruby
+role = Prompts::SelectPrompt.ask(
+  label: "What role should the user have?",
+  options: ["Member", "Contributor", "Owner"],
+  default: "Owner",
+  hint: "The role may be changed at any time."
+)
+```
+
+You may also pass a hash to the `options` argument to have the selected key returned instead of its value:
+
+```ruby
+role = Prompts::SelectPrompt.ask(
+  label: "What role should the user have?",
+  options: {
+    member: "Member",
+    contributor: "Contributor",
+    owner: "Owner",
+  },
+  default: "owner"
+)
+```
+
+#### Additional Validation
+
+Unlike other prompt classes, the `SelectPrompt` doesn't accept the `required` argument because it is not possible to select nothing. However, you may pass a block/proc to the `validate` argument if you need to present an option but prevent it from being selected:
+
+```ruby
+role = Prompts::SelectPrompt.ask(
+  label: "What role should the user have?",
+  options: {
+    member: "Member",
+    contributor: "Contributor",
+    owner: "Owner",
+  },
+  validate: ->(value) do
+    if value == "owner" && User.where(role: "owner").exists?
+      "An owner already exists."
+    end
+  end
+)
+```
+
+If the `options` argument is a hash, then the block will receive the selected key, otherwise it will receive the selected value. The block may return an error message, or `nil` if the validation passes.
+
+### Confirm
+
+If you need to ask the user for a "yes or no" confirmation, you may use the `ConfirmPrompt`. Users may press `y` or `n` (or `Y` or `N`) to select their response. This function will return either `true` or `false`.
+
+```ruby
+confirmed = Prompts::ConfirmPrompt.ask(label: "Do you accept the terms?")
+```
+
+You may also include a default value and an informational hint:
+
+```ruby
+confirmed = Prompts::ConfirmPrompt.ask(
+  label: "Do you accept the terms?",
+  default: false,
+  hint: "The terms must be accepted to continue.",
+)
+```
+
+#### Requiring "Yes"
+
+If necessary, you may require your users to select "Yes" by passing the `required` argument:
+
+```ruby
+confirmed = Prompts::ConfirmPrompt.ask(
+  label: "Do you accept the terms?",
+  required: true
+)
+```
+
+If you would like to customize the validation message, you may also pass a string:
+
+```ruby
+confirmed = Prompts::ConfirmPrompt.ask(
+  label: "Do you accept the terms?",
+  required: "You must accept the terms to continue."
+)
+```
+
+### Pause
+
+The `PausePrompt` may be used to display informational text to the user and wait for them to confirm their desire to proceed by pressing the Enter / Return key:
+
+```ruby
+Prompts::PausePrompt.ask
+```
 
 ## Development
 
