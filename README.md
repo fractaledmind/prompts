@@ -256,6 +256,32 @@ which generates a terminal screen like this (this representation doesn't show co
    <b>Press Enter ⏎ to continue...</b> |
 </pre>
 
+## Forms
+
+Often, you will have multiple prompts that will be displayed in sequence to collect information before performing additional actions. You may use the `Prompts::Form` class to create a grouped set of prompts for the user to complete:
+
+```ruby
+responses = Prompts::Form.submit do |form|
+  form.text(
+    label: "What is your name?",
+    required: true
+  )
+  form.select(
+    label: "What role should the user have?",
+    options: {
+      member: "Member",
+      contributor: "Contributor",
+      owner: "Owner",
+    }
+  )
+  form.confirm(
+    label: 'Do you accept the terms?'
+  )
+end
+```
+
+The `submit` method will return an array containing all of the responses from the form's prompts.
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake test` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.

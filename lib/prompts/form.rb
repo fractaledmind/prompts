@@ -2,47 +2,52 @@
 
 module Prompts
   class Form
+    def self.submit(&block)
+      instance = new()
+      yield instance if block_given?
+      instance.submit
+    end
+
     def initialize
-      @content = nil
+      @content = Prompts::Content.new
       @prompts = []
       @results = []
     end
 
     def content(&block)
-      @content = Prompts::Content.new
       yield @content
       @content
     end
 
-    def text(&block)
-      prompt = TextPrompt.new
-      yield(prompt)
+    def text(label: nil, prompt: "> ", hint: nil, default: nil, required: false, validate: nil, &block)
+      prompt = TextPrompt.new(label: label, prompt: prompt, hint: hint, default: default, required: required, validate: validate)
+      yield(prompt) if block_given?
       prepend_form_content_to_prompt(prompt)
       @prompts << prompt
     end
 
-    def select(&block)
-      prompt = SelectPrompt.new
-      yield(prompt)
+    def select(label: nil, options: nil, prompt: "> ", hint: nil, default: nil, validate: nil, &block)
+      prompt = SelectPrompt.new(label: label, options: options, prompt: prompt, hint: hint, default: default, validate: validate)
+      yield(prompt) if block_given?
       prepend_form_content_to_prompt(prompt)
       @prompts << prompt
     end
 
-    def pause(&block)
-      prompt = PausePrompt.new
-      yield(prompt)
+    def pause(label: nil, prompt: "> ", hint: nil, default: nil, required: false, validate: nil, &block)
+      prompt = PausePrompt.new(label: label, prompt: prompt, hint: hint, default: default, required: required, validate: validate)
+      yield(prompt) if block_given?
       prepend_form_content_to_prompt(prompt)
       @prompts << prompt
     end
 
-    def confirm(&block)
-      prompt = ConfirmPrompt.new
-      yield(prompt)
+    def confirm(label: nil, prompt: "> ", hint: nil, default: nil, required: false, validate: nil, &block)
+      prompt = ConfirmPrompt.new(label: label, prompt: prompt, hint: hint, default: default, required: required, validate: validate)
+      yield(prompt) if block_given?
       prepend_form_content_to_prompt(prompt)
       @prompts << prompt
     end
 
-    def start
+    def submit
       @prompts.each do |prompt|
         @results << prompt.ask
       end
