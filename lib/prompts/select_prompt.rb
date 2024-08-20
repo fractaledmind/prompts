@@ -2,13 +2,24 @@
 
 module Prompts
   class SelectPrompt < Prompt
-    def initialize(...)
-      super(...)
+    def self.ask(options: nil, **kwargs)
+      instance = new(options: options, **kwargs)
+      yield instance if block_given?
+      instance.ask
+    end
 
+    def initialize(options: nil, **kwargs)
+      super(**kwargs)
+
+      @options = options.is_a?(Array) ? options.to_h { |item| [item, item] } : options
+      if (index = @options.keys.index(@default))
+        @default = index + 1
+      else
+        @default = nil
+      end
       @instructions = "Enter the number of your choice"
-      @hint = "Type your response and press Enter ⏎"
-      @options = {}
-      @validations << ["Invalid choice.", ->(choice) { !choice.to_i.between?(1, @options.size) }]
+      @hint ||= "Type your response and press Enter ⏎"
+      @validations << ->(choice) { "Invalid choice." if !choice.to_i.between?(1, @options.size) }
     end
 
     def options(options)
