@@ -3,7 +3,7 @@
 module Prompts
   class TextPrompt < Prompt
     def initialize(...)
-      super(...)
+      super
 
       @instructions = "Press Enter to submit"
       @hint ||= "Type your response and press Enter ⏎"

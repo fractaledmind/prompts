@@ -20,8 +20,8 @@ require_relative "prompts/select_prompt"
 require_relative "prompts/form"
 
 module Prompts
-  EMPTY = "".freeze
-  SPACE = " ".freeze
+  EMPTY = ""
+  SPACE = " "
   MAX_WIDTH = 80
   OUTPUT = $stdout
 

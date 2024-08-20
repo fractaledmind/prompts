@@ -43,28 +43,28 @@ module Prompts
 
     private
 
-      def clear_screen
-        jump_cursor_to_top
-        erase_down
-      end
+    def clear_screen
+      jump_cursor_to_top
+      erase_down
+    end
 
-      def render_frame
-        @frame_stack << @slots.dup
-        OUTPUT.puts SPACE
+    def render_frame
+      @frame_stack << @slots.dup
+      OUTPUT.puts SPACE
 
-        return if @slots.empty?
+      return if @slots.empty?
 
-        OUTPUT.puts @slots.join("\n")
-        OUTPUT.puts SPACE
-        @slots.clear
-      end
+      OUTPUT.puts @slots.join("\n")
+      OUTPUT.puts SPACE
+      @slots.clear
+    end
 
-      def jump_cursor_to_top
-        OUTPUT.print "\033[H"
-      end
+    def jump_cursor_to_top
+      OUTPUT.print "\033[H"
+    end
 
-      def erase_down
-        OUTPUT.print "\e[J"
-      end
+    def erase_down
+      OUTPUT.print "\e[J"
+    end
   end
 end

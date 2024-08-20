@@ -2,7 +2,7 @@
 
 module Prompts
   class Form
-    def initialize()
+    def initialize
       @content = nil
       @prompts = []
       @results = []
@@ -51,10 +51,10 @@ module Prompts
 
     private
 
-      def prepend_form_content_to_prompt(prompt)
-        prompt.prepare_content
-        @content.gap
-        prompt.prepend_content(*@content.slots)
-      end
+    def prepend_form_content_to_prompt(prompt)
+      prompt.prepare_content
+      @content.gap
+      prompt.prepend_content(*@content.slots)
+    end
   end
 end

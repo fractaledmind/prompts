@@ -3,7 +3,7 @@
 module Prompts
   class PausePrompt < Prompt
     def initialize(...)
-      super(...)
+      super
 
       @prompt = "Press Enter ⏎ to continue..."
     end

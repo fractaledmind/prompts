@@ -5,7 +5,7 @@ require "unicode/emoji"
 
 module Prompts
   module TextUtils
-    ANSI_REGEX = /\e\[[0-9;]*[a-zA-Z]/.freeze
+    ANSI_REGEX = /\e\[[0-9;]*[a-zA-Z]/
 
     def wrap_text(text, width:, line_prefix: EMPTY, line_suffix: EMPTY, alignment: :left)
       words = text.scan(Regexp.union(/\S+/, ANSI_REGEX))

@@ -3,7 +3,7 @@
 module Prompts
   class ConfirmPrompt < Prompt
     def initialize(...)
-      super(...)
+      super
 
       @prompt = if @default == false
         "Choose [y/N]:"
@@ -20,12 +20,12 @@ module Prompts
 
     private
 
-      def resolve_choice_from(response)
-        case response
-        when "y", "Y" then true
-        when "n", "N" then false
-        when "" then @default_boolean
-        end
+    def resolve_choice_from(response)
+      case response
+      when "y", "Y" then true
+      when "n", "N" then false
+      when "" then @default_boolean
       end
+    end
   end
 end

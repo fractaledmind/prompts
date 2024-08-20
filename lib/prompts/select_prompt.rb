@@ -12,19 +12,19 @@ module Prompts
       super(**kwargs)
 
       @options = options.is_a?(Array) ? options.to_h { |item| [item, item] } : options
-      if (index = @options.keys.index(@default))
-        @default = index + 1
-      else
-        @default = nil
+      @default = if (index = @options.keys.index(@default))
+        index + 1
       end
       @instructions = "Enter the number of your choice"
       @hint ||= "Type your response and press Enter ⏎"
       @validations << ->(choice) { "Invalid choice." if !choice.to_i.between?(1, @options.size) }
     end
 
+    # standard:disable Style/TrivialAccessors
     def options(options)
       @options = options
     end
+    # standard:enable Style/TrivialAccessors
 
     def prepare_content
       super
@@ -36,10 +36,10 @@ module Prompts
 
     private
 
-      def resolve_choice_from(response)
-        choice = response.to_i
-        key, value = @options.to_a[choice - 1]
-        value
-      end
+    def resolve_choice_from(response)
+      choice = response.to_i
+      _key, value = @options.to_a[choice - 1]
+      value
+    end
   end
 end
