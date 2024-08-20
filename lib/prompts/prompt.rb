@@ -5,10 +5,12 @@ require "reline"
 module Prompts
   class Prompt
     def initialize(label: nil, prompt: "> ", instructions: nil, hint: nil)
+    def initialize(label: nil, prompt: "> ", instructions: nil, hint: nil, default: nil)
       @label = label
       @prompt = prompt
       @instructions = instructions
       @hint = hint
+      @default = default
 
       @content = nil
       @error = nil
@@ -36,8 +38,14 @@ module Prompts
       @hint = hint
     end
 
+    def default(default)
+      @default = default
+    end
+
     def ask
       prepare_content if !@content_prepared
+      prepare_default if @default
+
       loop do
         @content.render
         *initial_prompt_lines, last_prompt_line = formatted_prompt
@@ -74,6 +82,14 @@ module Prompts
     end
 
     private
+
+      def prepare_default
+        Reline.pre_input_hook = -> do
+          Reline.insert_text @default
+          # Remove the hook right away.
+          Reline.pre_input_hook = nil
+        end
+      end
 
       def resolve_choice_from(response)
         response
