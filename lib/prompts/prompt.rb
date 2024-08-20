@@ -11,6 +11,8 @@ module Prompts
       @instructions = instructions
       @hint = hint
       @default = default
+      @required = required
+      @validate = validate
 
       @content = nil
       @error = nil
@@ -45,6 +47,7 @@ module Prompts
     def ask
       prepare_content if !@content_prepared
       prepare_default if @default
+      prepare_validations
 
       loop do
         @content.render
@@ -53,7 +56,7 @@ module Prompts
         response = Reline.readline(last_prompt_line, history = false).chomp
         @choice = resolve_choice_from(response)
 
-        if (@error, * = @validations.find { |message, block| block.call(response) })
+        if (@error = ensure_validity(response))
           @content.reset!
           @content.paragraph Fmt("%{error}red|bold", error: @error + " Try again (×#{@attempts})...")
           @attempts += 1
@@ -91,6 +94,17 @@ module Prompts
         end
       end
 
+      def prepare_validations
+        if @required
+          error_message = @required.is_a?(String) ? @required : "Value cannot be empty."
+          @validations << ->(input) { error_message if input.empty? }
+        end
+
+        if @validate
+          @validations << @validate
+        end
+      end
+
       def resolve_choice_from(response)
         response
       end
@@ -111,6 +125,14 @@ module Prompts
 
       def formatted_error
         Fmt("%{error}red|bold", error: @error + " Try again (×#{@attempts})...")
+      end
+
+      def ensure_validity(response)
+        @validations.each do |validation|
+          result = validation.call(response)
+          return result if result
+        end
+        nil
       end
   end
 end
