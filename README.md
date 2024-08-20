@@ -28,6 +28,15 @@ A `Text` prompt will prompt the user with the given question, accept their input
 name = Prompts::TextPrompt.ask(label: "What is your name?")
 ```
 
+which generates a terminal screen like this (this representation doesn't show color):
+<pre>
+
+   <b>What is your name?</b> <em>(Press Enter to submit)</em>
+   <b>Type your response and press Enter ⏎</b>
+
+   <b>></b> |
+</pre>
+
 You may also include a default value and an informational hint:
 
 ```ruby
@@ -37,6 +46,15 @@ name = Prompts::TextPrompt.ask(
   hint: "This will be displayed on your profile."
 )
 ```
+
+which generates a terminal screen like this (this representation doesn't show color):
+<pre>
+
+   <b>What is your name?</b> <em>(Press Enter to submit)</em>
+   <b>This will be displayed on your profile.</b>
+
+   <b>></b> John Doe|
+</pre>
 
 #### Required values
 
@@ -88,6 +106,18 @@ role = Prompts::SelectPrompt.ask(
 )
 ```
 
+which generates a terminal screen like this (this representation doesn't show color):
+<pre>
+
+   <b>What role should the user have?</b> <em>(Enter the number of your choice)</em>
+   <b>Type your response and press Enter ⏎</b>
+   <b>1.</b> Member
+   <b>2.</b> Contributor
+   <b>3.</b> Owner
+
+   <b>></b> |
+</pre>
+
 You may also include a default value and an informational hint:
 
 ```ruby
@@ -98,6 +128,18 @@ role = Prompts::SelectPrompt.ask(
   hint: "The role may be changed at any time."
 )
 ```
+
+which generates a terminal screen like this (this representation doesn't show color):
+<pre>
+
+   <b>What role should the user have?</b> <em>(Enter the number of your choice)</em>
+   <b>The role may be changed at any time.</b>
+   <b>1.</b> Member
+   <b>2.</b> Contributor
+   <b>3.</b> Owner
+
+   <b>></b> 3|
+</pre>
 
 You may also pass a hash to the `options` argument to have the selected key returned instead of its value:
 
@@ -143,6 +185,14 @@ If you need to ask the user for a "yes or no" confirmation, you may use the `Con
 confirmed = Prompts::ConfirmPrompt.ask(label: "Do you accept the terms?")
 ```
 
+which generates a terminal screen like this (this representation doesn't show color):
+<pre>
+
+   <b>Do you accept the terms?</b> <em>(Press Enter to submit)</em>
+
+   <b>Choose [y/n]:</b> |
+</pre>
+
 You may also include a default value and an informational hint:
 
 ```ruby
@@ -152,6 +202,15 @@ confirmed = Prompts::ConfirmPrompt.ask(
   hint: "The terms must be accepted to continue.",
 )
 ```
+
+which generates a terminal screen like this (this representation doesn't show color):
+<pre>
+
+   <b>Do you accept the terms?</b> <em>(Press Enter to submit)</em>
+   <b>The terms must be accepted to continue.</b>
+
+   <b>Choose [y/N]:</b> |
+</pre>
 
 #### Requiring "Yes"
 
@@ -180,6 +239,12 @@ The `PausePrompt` may be used to display informational text to the user and wait
 ```ruby
 Prompts::PausePrompt.ask
 ```
+
+which generates a terminal screen like this (this representation doesn't show color):
+<pre>
+
+   <b>Press Enter ⏎ to continue...</b> |
+</pre>
 
 ## Development
 
