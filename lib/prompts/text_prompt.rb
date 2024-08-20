@@ -6,7 +6,7 @@ module Prompts
       super(...)
 
       @instructions = "Press Enter to submit"
-      @hint = "Type your response and press Enter ⏎"
+      @hint ||= "Type your response and press Enter ⏎"
     end
   end
 end
