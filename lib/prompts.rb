@@ -23,6 +23,7 @@ module Prompts
   EMPTY = "".freeze
   SPACE = " ".freeze
   MAX_WIDTH = 67
+  OUTPUT = $stdout
 
   class Error < StandardError; end
   # Your code goes here...
