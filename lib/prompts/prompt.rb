@@ -84,7 +84,7 @@ module Prompts
 
       def prepare_default
         Reline.pre_input_hook = -> do
-          Reline.insert_text @default
+          Reline.insert_text @default.to_s
           # Remove the hook right away.
           Reline.pre_input_hook = nil
         end
