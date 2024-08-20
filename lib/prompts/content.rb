@@ -2,9 +2,7 @@
 
 module Prompts
   class Content
-    include Rendering
-
-    attr_reader :frame_stack, :slots
+    attr_reader :slots
 
     def initialize(width: MAX_WIDTH)
       @slots = []
@@ -13,7 +11,8 @@ module Prompts
     end
 
     def paragraph(text)
-      @slots.concat Paragraph.new(text, width: @width).lines
+      paragraph = Paragraph.new(text, width: @width)
+      @slots.concat paragraph.lines
       self
     end
 
@@ -29,8 +28,40 @@ module Prompts
       self
     end
 
+    def render
+      clear_screen
+      render_frame
+    end
+
     def reset!
       @slots = @frame_stack.first.dup
     end
+
+    def prepend(*lines)
+      @slots.unshift(*lines)
+    end
+
+    private
+
+      def clear_screen
+        jump_cursor_to_top
+        erase_down
+      end
+
+      def render_frame
+        @frame_stack << @slots.dup
+        OUTPUT.puts SPACE
+        OUTPUT.puts @slots.join("\n")
+        OUTPUT.puts SPACE
+        @slots.clear
+      end
+
+      def jump_cursor_to_top
+        OUTPUT.print "\033[H"
+      end
+
+      def erase_down
+        OUTPUT.print "\e[J"
+      end
   end
 end
