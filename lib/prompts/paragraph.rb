@@ -13,7 +13,7 @@ module Prompts
     end
 
     def lines
-      wrap_text(@text, width: @width, line_prefix: @line_padding)
+      wrap_text(@text, width: @width, line_prefix: @line_padding, alignment: :none)
     end
   end
 end

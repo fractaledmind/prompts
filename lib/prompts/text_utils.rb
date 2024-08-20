@@ -38,6 +38,8 @@ module Prompts
       padding = [available_width - line_width, 0].max
 
       case alignment
+      when :none
+        prefix + line + suffix
       when :left
         prefix + line + (SPACE * padding) + suffix
       when :right

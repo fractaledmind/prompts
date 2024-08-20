@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "fmt"
-
 module Prompts
   class Box
     include TextUtils
@@ -44,11 +42,11 @@ module Prompts
     def lines
       [].tap do |output|
         output << top_border
-        align(EMPTY, :center).each { |line| output << SPACE + line } if @padded
+        align(EMPTY, :center).each { |line| output << @line_padding + line } if @padded
         @content.each do |line|
-          output << SPACE + line
+          output << @line_padding + line
         end
-        align(EMPTY, :center).each { |line| output << SPACE + line } if @padded
+        align(EMPTY, :center).each { |line| output << @line_padding + line } if @padded
         output << bottom_border
       end
     end
