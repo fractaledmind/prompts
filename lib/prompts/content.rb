@@ -51,6 +51,9 @@ module Prompts
       def render_frame
         @frame_stack << @slots.dup
         OUTPUT.puts SPACE
+
+        return if @slots.empty?
+
         OUTPUT.puts @slots.join("\n")
         OUTPUT.puts SPACE
         @slots.clear
