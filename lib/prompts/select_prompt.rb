@@ -38,8 +38,8 @@ module Prompts
 
     def resolve_choice_from(response)
       choice = response.to_i
-      _key, value = @options.to_a[choice - 1]
-      value
+      key, _value = @options.to_a[choice - 1]
+      key
     end
   end
 end
