@@ -18,6 +18,7 @@ require_relative "prompts/confirm_prompt"
 require_relative "prompts/text_prompt"
 require_relative "prompts/select_prompt"
 require_relative "prompts/form"
+require_relative "prompts/multi_prompt"
 
 module Prompts
   EMPTY = ""

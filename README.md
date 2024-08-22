@@ -105,6 +105,20 @@ name = Prompts::TextPrompt.ask(
 
 The block will receive the value that has been entered and may return an error message, or `nil` if the validation passes.
 
+#### Multiple answer
+
+If you would like recieve multiple responses from a single prompt, you can use `MultiPrompt`. The defauls sep
+
+```ruby
+name = Prompts::MultiPrompt.ask(
+  label: "What is your full name?",
+  separator: " ",
+)
+```
+
+Default separator is `,` and you can change it to any string you want.
+The result will be an array of strings.
+
 ### Select
 
 If you need the user to select from a predefined set of choices, you may use the `Select` prompt:

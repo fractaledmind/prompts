@@ -4,19 +4,20 @@ require "reline"
 
 module Prompts
   class Prompt
-    def self.ask(label: nil, prompt: "> ", hint: nil, default: nil, required: false, validate: nil)
-      instance = new(label: label, prompt: prompt, hint: hint, default: default, required: required, validate: validate)
+    def self.ask(label: nil, prompt: "> ", hint: nil, default: nil, required: false, validate: nil, separator: nil)
+      instance = new(label: label, prompt: prompt, hint: hint, default: default, required: required, validate: validate, separator: separator)
       yield instance if block_given?
       instance.ask
     end
 
-    def initialize(label: nil, prompt: "> ", hint: nil, default: nil, required: false, validate: nil)
+    def initialize(label: nil, prompt: "> ", hint: nil, default: nil, required: false, validate: nil, separator: nil)
       @label = label
       @prompt = prompt
       @hint = hint
       @default = default
       @required = required
       @validate = validate
+      @separator = separator
 
       @content = nil
       @error = nil
