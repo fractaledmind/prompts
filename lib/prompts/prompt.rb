@@ -4,26 +4,27 @@ require "reline"
 
 module Prompts
   class Prompt
-    def self.ask(label: nil, prompt: "> ", hint: nil, default: nil, required: false, validate: nil)
-      instance = new(label: label, prompt: prompt, hint: hint, default: default, required: required, validate: validate)
+    def self.ask(label: nil, prompt: "> ", hint: nil, default: nil, required: false, validate: nil, multiple: false)
+      instance = new(label: label, prompt: prompt, hint: hint, default: default, required: required, validate: validate, multiple: multiple)
       yield instance if block_given?
       instance.ask
     end
 
-    def initialize(label: nil, prompt: "> ", hint: nil, default: nil, required: false, validate: nil)
+    def initialize(label: nil, prompt: "> ", hint: nil, default: nil, required: false, validate: nil, multiple: false)
       @label = label
       @prompt = prompt
       @hint = hint
       @default = default
       @required = required
       @validate = validate
+      @multiple = multiple
 
       @content = nil
       @error = nil
       @attempts = 0
       @instructions = nil
       @validations = []
-      @choice = nil
+      @choice = @multiple ? [] : nil
       @content_prepared = false
     end
 
@@ -63,6 +64,9 @@ module Prompts
           @content.reset!
           @content.paragraph Fmt("%{error}red|bold", error: @error + " Try again (×#{@attempts})...")
           @attempts += 1
+          next
+        elsif @multiple && response != "0"
+          @content.reset!
           next
         else
           break @choice
