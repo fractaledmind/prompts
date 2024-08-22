@@ -3,8 +3,8 @@
 module Prompts
   class Form
     def self.submit(&block)
-      instance = new()
-      yield instance if block_given?
+      instance = new
+      yield instance if block
       instance.submit
     end
 
@@ -21,28 +21,28 @@ module Prompts
 
     def text(label: nil, prompt: "> ", hint: nil, default: nil, required: false, validate: nil, &block)
       prompt = TextPrompt.new(label: label, prompt: prompt, hint: hint, default: default, required: required, validate: validate)
-      yield(prompt) if block_given?
+      yield(prompt) if block
       prepend_form_content_to_prompt(prompt)
       @prompts << prompt
     end
 
     def select(label: nil, options: nil, prompt: "> ", hint: nil, default: nil, validate: nil, &block)
       prompt = SelectPrompt.new(label: label, options: options, prompt: prompt, hint: hint, default: default, validate: validate)
-      yield(prompt) if block_given?
+      yield(prompt) if block
       prepend_form_content_to_prompt(prompt)
       @prompts << prompt
     end
 
     def pause(label: nil, prompt: "> ", hint: nil, default: nil, required: false, validate: nil, &block)
       prompt = PausePrompt.new(label: label, prompt: prompt, hint: hint, default: default, required: required, validate: validate)
-      yield(prompt) if block_given?
+      yield(prompt) if block
       prepend_form_content_to_prompt(prompt)
       @prompts << prompt
     end
 
     def confirm(label: nil, prompt: "> ", hint: nil, default: nil, required: false, validate: nil, &block)
       prompt = ConfirmPrompt.new(label: label, prompt: prompt, hint: hint, default: default, required: required, validate: validate)
-      yield(prompt) if block_given?
+      yield(prompt) if block
       prepend_form_content_to_prompt(prompt)
       @prompts << prompt
     end
