@@ -2,10 +2,8 @@
 
 require "io/console"
 require "reline"
+require "rainbow" # this needs to come before require "fmt"
 require "fmt"
-require "rainbow"
-
-Fmt.add_rainbow_filters
 
 require_relative "prompts/version"
 require_relative "prompts/prompt"

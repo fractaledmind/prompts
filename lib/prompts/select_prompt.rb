@@ -29,7 +29,7 @@ module Prompts
     def prepare_content
       super
       @options.each_with_index do |(key, value), index|
-        @content.paragraph Fmt("%{prefix}faint|bold %{option}", prefix: "#{index + 1}.", option: value)
+        @content.paragraph Fmt("%{prefix}|>faint|>bold %{option}", prefix: "#{index + 1}.", option: value)
       end
       @content
     end

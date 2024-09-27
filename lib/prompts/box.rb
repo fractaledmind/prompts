@@ -55,16 +55,16 @@ module Prompts
 
     def top_border
       border = @border_parts[:top_left] + @border_parts[:horizontal] * (@width - 2) + @border_parts[:top_right]
-      Fmt("#{@line_padding}%{border}#{@border_color}", border: border)
+      Fmt("#{@line_padding}%{border}|>#{@border_color}", border: border)
     end
 
     def bottom_border
       border = @border_parts[:bottom_left] + @border_parts[:horizontal] * (@width - 2) + @border_parts[:bottom_right]
-      Fmt("#{@line_padding}%{border}#{@border_color}", border: border)
+      Fmt("#{@line_padding}%{border}|>#{@border_color}", border: border)
     end
 
     def align(text, alignment, between: @border_parts[:vertical])
-      formatted_boundary = Fmt("%{boundary}#{@border_color}", boundary: between)
+      formatted_boundary = Fmt("%{boundary}|>#{@border_color}", boundary: between)
       wrap_text(text, width: @width, line_prefix: formatted_boundary + SPACE, line_suffix: SPACE + formatted_boundary, alignment: alignment)
     end
   end
