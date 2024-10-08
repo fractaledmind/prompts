@@ -1,5 +1,9 @@
 ## [Unreleased]
 
+## [0.3.0] - 2024-10-08
+
+- Update `fmt` gem and use new syntax ([@KonnorRogers](https://github.com/fractaledmind/prompts/pull/9))
+
 ## [0.2.1] - 2024-08-22
 
 - Add `Form.submit` method
