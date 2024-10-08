@@ -1,5 +1,10 @@
 ## [Unreleased]
 
+## [0.3.1] - 2024-10-08
+
+- Keep past frames in the terminal window ([@fractaledmind](https://github.com/fractaledmind/prompts/pull/10))
+- Allow users to specify a new for form fields ([@fractaledmind](https://github.com/fractaledmind/prompts/pull/11))
+
 ## [0.3.0] - 2024-10-08
 
 - Update `fmt` gem and use new syntax ([@KonnorRogers](https://github.com/fractaledmind/prompts/pull/9))
