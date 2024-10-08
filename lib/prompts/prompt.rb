@@ -61,7 +61,7 @@ module Prompts
 
         if (@error = ensure_validity(response))
           @content.reset!
-          @content.paragraph Fmt("%{error}red|bold", error: @error + " Try again (×#{@attempts})...")
+          @content.paragraph Fmt("%{error}|>red|>bold", error: @error + " Try again (×#{@attempts})...")
           @attempts += 1
           next
         else
@@ -114,20 +114,20 @@ module Prompts
 
     def formatted_prompt
       prompt_with_space = @prompt.end_with?(SPACE) ? @prompt : @prompt + SPACE
-      ansi_prompt = Fmt("%{prompt}faint|bold", prompt: prompt_with_space)
+      ansi_prompt = Fmt("%{prompt}|>faint|>bold", prompt: prompt_with_space)
       @formatted_prompt ||= Paragraph.new(ansi_prompt, width: MAX_WIDTH).lines
     end
 
     def formatted_label
-      Fmt("%{label}cyan|bold %{instructions}faint|italic", label: @label, instructions: @instructions ? "(#{@instructions})" : "")
+      Fmt("%{label}|>cyan|>bold %{instructions}|>faint|>italic", label: @label, instructions: @instructions ? "(#{@instructions})" : "")
     end
 
     def formatted_hint
-      Fmt("%{hint}faint|bold", hint: @hint)
+      Fmt("%{hint}|>faint|>bold", hint: @hint)
     end
 
     def formatted_error
-      Fmt("%{error}red|bold", error: @error + " Try again (×#{@attempts})...")
+      Fmt("%{error}|>red|>bold", error: @error + " Try again (×#{@attempts})...")
     end
 
     def ensure_validity(response)

@@ -2,7 +2,7 @@ PATH
   remote: .
   specs:
     prompts (0.2.1)
-      fmt
+      fmt (>= 0.3.0)
       rainbow
       reline
       unicode-display_width
@@ -12,7 +12,8 @@ GEM
   remote: https://rubygems.org/
   specs:
     ast (2.4.2)
-    fmt (0.1.3)
+    fmt (0.3.1)
+      ast
     io-console (0.7.2)
     json (2.7.2)
     language_server-protocol (3.17.0.3)
