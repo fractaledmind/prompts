@@ -64,7 +64,7 @@ module Prompts
     end
 
     def erase_down
-      OUTPUT.print "\e[J"
+      OUTPUT.print "\e[2J\e[H"
     end
   end
 end
