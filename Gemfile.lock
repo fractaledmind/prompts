@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    prompts (0.2.1)
+    prompts (0.3.0)
       fmt (>= 0.3.0)
       rainbow
       reline
