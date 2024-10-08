@@ -280,7 +280,36 @@ responses = Prompts::Form.submit do |form|
 end
 ```
 
-The `submit` method will return an array containing all of the responses from the form's prompts.
+The `submit` method will return a numerically indexed hash containing all of the responses from the form's prompts. However, you may provide a name for each prompt via the `name` argument. When a name is provided, the named prompt's response may be accessed via that name:
+
+```ruby
+responses = Prompts::Form.submit do |form|
+  form.text(
+    label: "What is your name?",
+    required: true,
+    name: :name
+  )
+  form.select(
+    label: "What role should the user have?",
+    options: {
+      member: "Member",
+      contributor: "Contributor",
+      owner: "Owner",
+    },
+    name: :role
+  )
+  form.confirm(
+    label: 'Do you accept the terms?',
+    name: :terms
+  )
+end
+
+User.create(
+  name: responses[:name],
+  role: responses[:role],
+  terms: responses[:terms]
+)
+```
 
 ## Development
 
