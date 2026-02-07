@@ -26,6 +26,12 @@ module Prompts
   class Error < StandardError; end
 
   class << self
+    attr_writer :clear_screen
+
+    def clear_screen
+      @clear_screen.nil? ? true : @clear_screen
+    end
+
     def Form(&block)
       form = Prompts::Form.new
       yield(form)

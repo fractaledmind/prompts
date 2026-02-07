@@ -4,10 +4,11 @@ module Prompts
   class Content
     attr_reader :slots
 
-    def initialize(width: MAX_WIDTH)
+    def initialize(width: MAX_WIDTH, clear_screen: Prompts.clear_screen)
       @slots = []
       @frame_stack = []
       @width = width
+      @clear_screen = clear_screen
     end
 
     def paragraph(text)
@@ -29,7 +30,7 @@ module Prompts
     end
 
     def render
-      clear_screen
+      clear_screen if @clear_screen
       render_frame
     end
 
