@@ -20,32 +20,32 @@ module Prompts
       @content
     end
 
-    def text(label: nil, prompt: "> ", hint: nil, default: nil, required: false, validate: nil, name: nil, &block)
-      prompt = TextPrompt.new(label: label, prompt: prompt, hint: hint, default: default, required: required, validate: validate)
+    def text(label: nil, prompt: "> ", hint: nil, default: nil, required: false, validate: nil, name: nil, clear_screen: Prompts.clear_screen, &block)
+      prompt = TextPrompt.new(label: label, prompt: prompt, hint: hint, default: default, required: required, validate: validate, clear_screen: clear_screen)
       yield(prompt) if block
       prepend_form_content_to_prompt(prompt)
       key = name || (@index += 1)
       @prompts[key] = prompt
     end
 
-    def select(label: nil, options: nil, prompt: "> ", hint: nil, default: nil, validate: nil, name: nil, &block)
-      prompt = SelectPrompt.new(label: label, options: options, prompt: prompt, hint: hint, default: default, validate: validate)
+    def select(label: nil, options: nil, prompt: "> ", hint: nil, default: nil, validate: nil, name: nil, clear_screen: Prompts.clear_screen, &block)
+      prompt = SelectPrompt.new(label: label, options: options, prompt: prompt, hint: hint, default: default, validate: validate, clear_screen: clear_screen)
       yield(prompt) if block
       prepend_form_content_to_prompt(prompt)
       key = name || (@index += 1)
       @prompts[key] = prompt
     end
 
-    def pause(label: nil, prompt: "> ", hint: nil, default: nil, required: false, validate: nil, name: nil, &block)
-      prompt = PausePrompt.new(label: label, prompt: prompt, hint: hint, default: default, required: required, validate: validate)
+    def pause(label: nil, prompt: "> ", hint: nil, default: nil, required: false, validate: nil, name: nil, clear_screen: Prompts.clear_screen, &block)
+      prompt = PausePrompt.new(label: label, prompt: prompt, hint: hint, default: default, required: required, validate: validate, clear_screen: clear_screen)
       yield(prompt) if block
       prepend_form_content_to_prompt(prompt)
       key = name || (@index += 1)
       @prompts[key] = prompt
     end
 
-    def confirm(label: nil, prompt: "> ", hint: nil, default: nil, required: false, validate: nil, name: nil, &block)
-      prompt = ConfirmPrompt.new(label: label, prompt: prompt, hint: hint, default: default, required: required, validate: validate)
+    def confirm(label: nil, prompt: "> ", hint: nil, default: nil, required: false, validate: nil, name: nil, clear_screen: Prompts.clear_screen, &block)
+      prompt = ConfirmPrompt.new(label: label, prompt: prompt, hint: hint, default: default, required: required, validate: validate, clear_screen: clear_screen)
       yield(prompt) if block
       prepend_form_content_to_prompt(prompt)
       key = name || (@index += 1)

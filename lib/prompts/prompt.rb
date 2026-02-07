@@ -4,19 +4,20 @@ require "reline"
 
 module Prompts
   class Prompt
-    def self.ask(label: nil, prompt: "> ", hint: nil, default: nil, required: false, validate: nil)
-      instance = new(label: label, prompt: prompt, hint: hint, default: default, required: required, validate: validate)
+    def self.ask(label: nil, prompt: "> ", hint: nil, default: nil, required: false, validate: nil, clear_screen: Prompts.clear_screen)
+      instance = new(label: label, prompt: prompt, hint: hint, default: default, required: required, validate: validate, clear_screen: clear_screen)
       yield instance if block_given?
       instance.ask
     end
 
-    def initialize(label: nil, prompt: "> ", hint: nil, default: nil, required: false, validate: nil)
+    def initialize(label: nil, prompt: "> ", hint: nil, default: nil, required: false, validate: nil, clear_screen: Prompts.clear_screen)
       @label = label
       @prompt = prompt
       @hint = hint
       @default = default
       @required = required
       @validate = validate
+      @clear_screen = clear_screen
 
       @content = nil
       @error = nil
@@ -28,7 +29,7 @@ module Prompts
     end
 
     def content(&block)
-      @content ||= Prompts::Content.new
+      @content ||= Prompts::Content.new(clear_screen: @clear_screen)
       yield @content
       @content
     end
@@ -79,7 +80,7 @@ module Prompts
     end
 
     def prepare_content
-      @content ||= Prompts::Content.new
+      @content ||= Prompts::Content.new(clear_screen: @clear_screen)
       @content.paragraph formatted_label if @label
       @content.paragraph formatted_hint if @hint
       @content.paragraph formatted_error if @error
